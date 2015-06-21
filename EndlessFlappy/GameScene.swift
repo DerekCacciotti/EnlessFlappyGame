@@ -71,7 +71,7 @@ class GameScene: SKScene {
         node.position.y = CGFloat(yy)
     }
     
-    func randomOffset() -> Float
+    func randomOffset() -> Float // 19:02
     {
          let max = maxnum - lastOffset
         let min = minnum - lastOffset
