@@ -71,13 +71,41 @@ class GameScene: SKScene {
         node.position.y = CGFloat(yy)
     }
     
-    func randomOffset() -> Float // 19:02
+    func randomOffset() -> Float
     {
          let max = maxnum - lastOffset
         let min = minnum - lastOffset
         var rand: Float = Float(arc4random() % 61) + 40
-        var randBool: Float = Float(arc4random() % 31 + 1
+        var randBool: Float = Float(arc4random() % 31) + 1
+        
+        if randBool % 2 == 0
+        {
+            var tempnum = lastOffset + rand
+            if tempnum > maxnum
+            {
+                tempnum = maxnum - randBool
+            }
+            
+            rand = tempnum
         }
+        
+        else
+        {
+            var tempnum = lastOffset - rand
+            if tempnum < minnum
+            {
+                tempnum = minnum + rand
+            }
+            
+            rand = tempnum
+        }
+        
+        lastOffset = rand
+        
+        return rand
+        
+        
+        }// end of func
     
     
     
@@ -99,7 +127,7 @@ class GameScene: SKScene {
             {
                 if pipe.position.x < self.view!.bounds.width - pipe.size.width * 2.0
                 {
-                    self.createPipes(0)
+                    self.createPipes(self.randomOffset())
                 }
             }
         }
