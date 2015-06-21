@@ -8,9 +8,10 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+class GameScene: SKScene,SKPhysicsContactDelegate {
     
     var mainPipe: SKSpriteNode = SKSpriteNode()
+    var bird:SKShapeNode = SKShapeNode(circleOfRadius: 15)
     
     var spacebetweenpipes:Float = 90 // number of pixels between each space
     var lastOffset: Float = 0
@@ -25,8 +26,26 @@ class GameScene: SKScene {
         
         
         
+        // phyiscs for the bird 
+        bird.physicsBody = SKPhysicsBody(circleOfRadius: 15)
+        bird.physicsBody?.dynamic = false
+        bird.zPosition = 9
+        bird.lineWidth - 0
+        bird.fillColor = UIColor.yellowColor()
+        bird.position = CGPoint(x: 150, y: view.bounds.height / 2 - 10)
+        
+        
+        
+        // SKphyiscsworld delegate 
+        self.physicsWorld.contactDelegate = self
+        self.physicsWorld.gravity = CGVectorMake(0, -5.0)
+        
+        
         // put pipes on screen
         createPipes(0)
+        
+        // put bird on the screen 
+        self.addChild(bird)
     }
     
     func createPipes(offs:Float)
