@@ -13,6 +13,9 @@ class GameScene: SKScene {
     var mainPipe: SKSpriteNode = SKSpriteNode()
     
     var spacebetweenpipes:Float = 90 // number of pixels between each space
+    var lastOffset: Float = 0
+    var maxnum:Float = 175
+    var minnum:Float = -100
     
     var pipes:[SKSpriteNode] = []
     
@@ -68,6 +71,14 @@ class GameScene: SKScene {
         node.position.y = CGFloat(yy)
     }
     
+    func randomOffset() -> Float
+    {
+         let max = maxnum - lastOffset
+        let min = minnum - lastOffset
+        var rand: Float = Float(arc4random() % 61) + 40
+        var randBool: Float = Float(arc4random() % 31 + 1
+        }
+    
     
     
     
@@ -82,6 +93,15 @@ class GameScene: SKScene {
         for (var i = 0; i < pipes.count; i++)
         {
             let pipe = pipes[i]
+            pipe.position.x -= 1
+            
+            if i == pipes.count - 1
+            {
+                if pipe.position.x < self.view!.bounds.width - pipe.size.width * 2.0
+                {
+                    self.createPipes(0)
+                }
+            }
         }
         /* Called before each frame is rendered */
     }
