@@ -18,6 +18,9 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
     var maxnum:Float = 175
     var minnum:Float = -100
     
+    var birdCategory: UInt32 = 1
+    var pipeCategory: UInt32 = 2
+    
     var pipes:[SKSpriteNode] = []
     
     override func didMoveToView(view: SKView)
@@ -28,11 +31,14 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         
         // phyiscs for the bird 
         bird.physicsBody = SKPhysicsBody(circleOfRadius: 15)
-        bird.physicsBody?.dynamic = false
+        bird.physicsBody!.dynamic = true
         bird.zPosition = 9
         bird.lineWidth - 0
         bird.fillColor = UIColor.yellowColor()
         bird.position = CGPoint(x: 150, y: view.bounds.height / 2 - 10)
+        bird.physicsBody?.contactTestBitMask = pipeCategory
+        bird.physicsBody?.collisionBitMask = pipeCategory
+        
         
         
         
@@ -58,6 +64,21 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         
        self.setBottomPosition(pipebottom, x: xx, y: offset)
         self.setTopPosition(pipeTop, x: xx, y: offset + spacebetweenpipes)
+        
+        // physics bodies for the the pipes
+        pipebottom.physicsBody = SKPhysicsBody(rectangleOfSize: pipebottom.size)
+        pipeTop.physicsBody = SKPhysicsBody(rectangleOfSize: pipeTop.size)
+        pipebottom.physicsBody?.dynamic = false
+        pipeTop.physicsBody?.dynamic = false
+        
+        // hit detection
+        
+        pipebottom.physicsBody!.contactTestBitMask = birdCategory
+        pipeTop.physicsBody!.contactTestBitMask = birdCategory
+        pipebottom.physicsBody!.collisionBitMask = birdCategory
+        pipeTop.physicsBody!.collisionBitMask = birdCategory
+        
+        
         
         // adding pipes to pipes array so they can be added as the scene moves along
         pipes.append(pipebottom)
@@ -132,6 +153,9 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
     
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        
+               
+        bird.physicsBody.velocity = CGVectorMake(0, vel)
         /* Called when a touch begins */
         
         }
